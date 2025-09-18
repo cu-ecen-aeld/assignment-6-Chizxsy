@@ -14,7 +14,7 @@ jobs:
               clean: false
               submodules: 'recursive'
           - name: set up QEMU
-            uses: docker/setup-qemu-actions@v3
+            uses: docker/setup-qemu-action@v3
 
           - uses: webfactory/ssh-agent@v0.5.4
             with:
