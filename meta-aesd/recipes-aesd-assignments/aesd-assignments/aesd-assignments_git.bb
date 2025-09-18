@@ -8,7 +8,7 @@ SRC_URI = "git://github.com/cu-ecen-aeld/assignments-3-and-later-Chizxsy.git;pro
 
 PV = "1.0+git${SRCPV}"
 # TODO: set to reference a specific commit hash in your assignment repo
-SRCREV = "433371eb6839e5ce61b286743b10cfe12576b542"
+SRCREV = "fc523928a0644be7a2beb60e75e2b5bd094e006c"
 
 # This sets your staging directory based on WORKDIR, where WORKDIR is defined at 
 # https://docs.yoctoproject.org/ref-manual/variables.html?highlight=workdir#term-WORKDIR
@@ -16,10 +16,15 @@ SRCREV = "433371eb6839e5ce61b286743b10cfe12576b542"
 # in your assignments repo
 S = "${WORKDIR}/git/server"
 
+# start the socket server using SysV init
+inherit update-rc.d
+INITSCRIPT_NAME = "S99aesdsocket.sh"
+INITSCRIPT_PARAMS = "start 99 5 . stop 20 0 1 6 ."
+
 # TODO: Add the aesdsocket application and any other files you need to install
 # See https://git.yoctoproject.org/poky/plain/meta/conf/bitbake.conf?h=kirkstone
 FILES:${PN} += "${bindir}/aesdsocket"
-FILES:${PN} += "${sysconfdir}/S99aesdsocket.sh" 
+FILES:${PN} += "${sysconfdir}/init.d/S99aesdsocket.sh" 
 # TODO: customize these as necessary for any libraries you need for your application
 # (and remove comment)
 TARGET_LDFLAGS += "-pthread -lrt"
