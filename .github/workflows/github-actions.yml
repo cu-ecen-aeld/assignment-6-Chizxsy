@@ -8,13 +8,14 @@ on:
 jobs:
       full-test:
         runs-on: self-hosted
-        env:
-          DOCKER_DEFAULT_PLATFORM: linux/arm64
         steps:
           - uses: actions/checkout@v3
             with:
               clean: false
               submodules: 'recursive'
+          - name: set up QEMU
+            uses: docker/setup-qemu-actions@v3
+
           - uses: webfactory/ssh-agent@v0.5.4
             with:
                  ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
